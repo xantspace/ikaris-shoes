@@ -1,7 +1,7 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { mockProducts } from '../data/mockData';
 import ProductCard from '../components/ProductCard';
-import { LayoutGrid, List, SlidersHorizontal, X } from 'lucide-react';
+import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ShopPage() {
@@ -214,7 +214,7 @@ export default function ShopPage() {
             {/* Duplicate to make grid look full */}
             {mockProducts.map((product, index) => (
               <motion.div
-                key={product.id * 2}
+                key={`${product.id}-2`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: (index + mockProducts.length) * 0.05 }}

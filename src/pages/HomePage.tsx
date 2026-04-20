@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { ArrowRight, ArrowDown } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { mockProducts, mockCollections } from '../data/mockData';
 import ProductCard from '../components/ProductCard';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { CircularTestimonials } from '../components/ui/circular-testimonials';
 import { TestimonialCarousel } from '../components/TestimonialCarousel';
+
 
 const shoeGallery = [
   { src: '/shoe1.jpg' },

@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { mockStories } from '../data/mockData';
@@ -84,7 +84,7 @@ export default function StoriesPage() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16"
         >
           <AnimatePresence mode='popLayout'>
-            {filteredStories.map((story, index) => (
+            {filteredStories.map((story) => (
               <motion.article 
                 key={story.id}
                 layout

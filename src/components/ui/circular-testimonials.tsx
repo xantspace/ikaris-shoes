@@ -6,8 +6,8 @@ import React, {
   useMemo,
   useCallback,
 } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+
+
 
 interface Testimonial {
   src: string;
@@ -37,7 +37,7 @@ export const CircularTestimonials = ({
   const [containerWidth, setContainerWidth] = useState(1200);
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
-  const autoplayIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const autoplayIntervalRef = useRef<number | null>(null);
 
   const testimonialsLength = useMemo(() => testimonials.length, [testimonials]);
 
@@ -89,7 +89,7 @@ export const CircularTestimonials = ({
   function getImageStyle(index: number): React.CSSProperties {
     const gap = calculateGap(containerWidth);
     const maxStickUp = gap * 0.8;
-    const offset = (index - activeIndex + testimonialsLength) % testimonialsLength;
+    // const offset = (index - activeIndex + testimonialsLength) % testimonialsLength;
     const isActive = index === activeIndex;
     const isLeft = (activeIndex - 1 + testimonialsLength) % testimonialsLength === index;
     const isRight = (activeIndex + 1) % testimonialsLength === index;

@@ -1,7 +1,7 @@
-﻿import { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { mockProducts } from '../data/mockData';
-import { ChevronRight, Heart, Share2, Info, ChevronDown, Check } from 'lucide-react';
+import { ChevronRight, Heart, Share2, Info, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import ShoeViewer from '../components/ShoeViewer';

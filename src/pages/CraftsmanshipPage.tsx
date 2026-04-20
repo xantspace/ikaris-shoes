@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Hammer, Waves, Sun, ShieldCheck } from 'lucide-react';
+import { Hammer, Waves, Sun, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const processes = [

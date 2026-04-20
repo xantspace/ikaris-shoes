@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Plus, ShoppingBag, Check, Package, Truck, ArrowRight } from 'lucide-react';
+import { X, Minus, Plus, ShoppingBag, Check, Package, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 

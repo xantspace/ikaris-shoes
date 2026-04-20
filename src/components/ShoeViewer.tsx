@@ -66,7 +66,6 @@ export default function ShoeViewer({ color, scrollProgress }: ShoeProps) {
           <Stage 
             environment="studio" 
             intensity={0.5} 
-            contactShadow={{ opacity: 0.5, blur: 2 }} 
             adjustCamera={true}
           >
             <Shoe color={color} scrollProgress={scrollProgress} />
