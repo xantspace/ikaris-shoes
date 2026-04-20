@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gift, X, ArrowRight, Tag } from 'lucide-react';
+import { Gift, X, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function PromoGiftbox() {
