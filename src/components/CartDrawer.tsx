@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, ShoppingBag, Check, Package, Truck, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
@@ -100,7 +100,7 @@ export default function CartDrawer() {
                               <p className="font-mono text-sm tracking-tighter">${item.product.price}</p>
                             </div>
                             <p className="text-[10px] uppercase tracking-widest text-text-secondary">
-                              {item.color.name} â€¢ Size {item.size}
+                              {item.color.name} • Size {item.size}
                             </p>
                           </div>
                           
@@ -224,7 +224,7 @@ export default function CartDrawer() {
                       <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                     </button>
                     <p className="text-[9px] text-center text-text-secondary uppercase tracking-[0.2em]">
-                      Secure server â€¢ Duties & Taxes included
+                      Secure server • Duties & Taxes included
                     </p>
                   </div>
                 </div>

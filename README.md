@@ -1,74 +1,37 @@
-﻿# React + TypeScript + Vite
+# IkarisShoes™ | The Art of Motion
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Handcrafted in Florence, Italy. IkarisShoes™ is a dialogue between technical innovation and centuries-old tradition. We engineer movement for the modern nomad who values endurance as much as aesthetics.
 
-Currently, two official plugins are available:
+![IkarisShoes Banner](https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?q=80&w=2000&auto=format&fit=crop)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Our Philosophy
+In a world of mass production, we choose the deliberate path. Every silhouette is refined through generations, hand-cut from a single piece of premium Tuscan calfskin, and engineered for a perfect, anatomical fit.
 
-## React Compiler
+- **Obsessive Detail**: From aniline selection to hand-burnishing, we oversee 120+ manual operations for every pair.
+- **The Modern Nomad**: Our designs seamlessly transition from city streets to high-altitude escapes.
+- **Sustainable Legacy**: We source only the top 3% of Tuscan hides from ethical, gold-rated tanneries.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## The Collections
+Our shop is a curated gallery of footwear mastery:
+- **Derby & Oxfords**: Timeless silhouettes for formal environments.
+- **Loafers**: Unstructured comfort for the lifestyle explorer.
+- **Chelsea Boots**: All-weather craftsmanship for the resilient journeyer.
 
-## Expanding the ESLint configuration
+## The Digital Atelier
+Experience our craftsmanship through our experimental digital exploration platform:
+- **Sub-Cellular Viewport**: An interactive 3D workstation to inspect every stitch and grain.
+- **Interactive Storytelling**: A visual journey through the heritage of our Florentine workshop.
+- **Seamless Procurement**: A friction-less checkout experience designed for the discerning collector.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Technical Specification
+The Digital Atelier is built on a high-performance stack to ensure a premium, lag-free exploration experience:
+- **Core**: React 19 + Vite
+- **Visual Engine**: Three.js / React Three Fiber
+- **Motion**: Framer Motion
+- **Aesthetics**: Vanilla CSS + Tailwind Typography
+- **Optimization**: Vercel Edge Network
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
+---
+© 2026 IkarisShoes™ Atelier. Florence, Italy.

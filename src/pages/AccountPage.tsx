@@ -1,4 +1,4 @@
-﻿import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Settings, Package, MapPin, CreditCard, LogOut, ChevronRight, Star } from 'lucide-react';
 import { useState } from 'react';
 
@@ -48,7 +48,7 @@ export default function AccountPage() {
                 <Star className="w-2 h-2 fill-accent" /> Collector
               </div>
             </div>
-            <p className="text-text-secondary text-sm">Member since 2022 â€¢ Florence, Italy</p>
+            <p className="text-text-secondary text-sm">Member since 2022 • Florence, Italy</p>
           </div>
           <button className="md:ml-auto flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-text-secondary hover:text-accent transition-colors">
             <LogOut className="w-4 h-4" /> Sign Out
