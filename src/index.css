@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-bg: #fafaf8;
+  --color-secondary-bg: #f5f3ef;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b6b6b;
+  --color-accent: #8b7355;
+  --color-accent-hover: #6f5c45;
+  --color-border: #e5e5e5;
+
+  --font-display: 'Syne', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --spacing-section-y: 80px;
+  --spacing-section-y-mobile: 40px;
+}
+
+@layer base {
+  body {
+    @apply bg-primary-bg text-text-primary font-body antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-medium tracking-tight;
+  }
+
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-text-primary text-white px-10 py-4 rounded-[2px] transition-colors duration-200 hover:bg-[#333333] inline-flex items-center justify-center font-medium;
+  }
+  
+  .btn-secondary {
+    @apply bg-transparent text-text-primary border border-text-primary px-10 py-4 rounded-[2px] transition-colors duration-200 hover:bg-text-primary hover:text-white inline-flex items-center justify-center font-medium;
+  }
+  
+  .btn-accent {
+    @apply bg-accent text-white px-10 py-4 rounded-[2px] transition-colors duration-200 hover:bg-accent-hover inline-flex items-center justify-center font-medium;
+  }
+
+  .container-custom {
+    @apply max-w-[1400px] mx-auto px-6 md:px-12;
+  }
+
+  .vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  /* Link hover animation */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: currentColor;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-secondary-bg;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-border rounded-full hover:bg-text-secondary;
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
