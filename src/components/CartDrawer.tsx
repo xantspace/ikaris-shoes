@@ -36,11 +36,11 @@ export default function CartDrawer() {
 
           {/* Drawer */}
           <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-primary-bg z-[101] shadow-2xl flex flex-col"
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 250 }}
+            className="fixed bottom-0 left-0 right-0 mx-auto h-[70vh] md:h-[50vh] w-full max-w-3xl bg-primary-bg z-[101] shadow-[0_-10px_40px_rgba(0,0,0,0.2)] flex flex-col rounded-t-2xl sm:rounded-t-3xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-border">

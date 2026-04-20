@@ -9,6 +9,7 @@ import ProductPage from './pages/ProductPage';
 import StoriesPage from './pages/StoriesPage';
 import AccountPage from './pages/AccountPage';
 import CraftsmanshipPage from './pages/CraftsmanshipPage';
+import PromoGiftbox from './components/PromoGiftbox';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <div className="flex flex-col min-h-screen">
           <Header />
           <CartDrawer />
+          <PromoGiftbox />
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<HomePage />} />

@@ -127,7 +127,7 @@ export default function HomePage() {
             <div className="w-full md:w-1/2">
               <div className="aspect-square relative overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1549468057-5b6fbca58999?q=80&w=1000&auto=format&fit=crop" 
+                  src="/man.jpg" 
                   alt="Craftsman working on a shoe" 
                   className="w-full h-full object-cover"
                 />
