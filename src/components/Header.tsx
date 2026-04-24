@@ -1,14 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ShoppingBag, Search, User, Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [shouldRenderMenu, setShouldRenderMenu] = useState(false);
   const { items, setIsCartOpen } = useCart();
   const { pathname } = useLocation();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const cartCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -20,7 +23,33 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      setShouldRenderMenu(true);
+    }
+  }, [isMobileMenuOpen]);
+
+  useGSAP(() => {
+    if (shouldRenderMenu && mobileMenuRef.current) {
+      if (isMobileMenuOpen) {
+        gsap.fromTo(mobileMenuRef.current,
+          { x: '-100%' },
+          { x: 0, duration: 0.4, ease: 'power3.out' }
+        );
+      } else {
+        gsap.to(mobileMenuRef.current, {
+          x: '-100%',
+          duration: 0.3,
+          ease: 'power3.in',
+          onComplete: () => setShouldRenderMenu(false)
+        });
+      }
+    }
+  }, [isMobileMenuOpen, shouldRenderMenu]);
+
   const isHomepage = pathname === '/';
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
     <>
@@ -50,14 +79,14 @@ export default function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex gap-8 absolute left-1/2 -translate-x-1/2">
+          <nav className="header-element hidden md:flex gap-8 absolute left-1/2 -translate-x-1/2">
             <Link to="/shop" className="text-sm font-medium hover:text-accent transition-colors">
               Collection
             </Link>
             <Link to="/stories" className="text-sm font-medium hover:text-accent transition-colors">
               Our Stories
             </Link>
-            <Link to="#" className="text-sm font-medium hover:text-accent transition-colors">
+            <Link to="/craftsmanship" className="text-sm font-medium hover:text-accent transition-colors">
               Craftsmanship
             </Link>
           </nav>
@@ -89,37 +118,32 @@ export default function Header() {
       </header>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed inset-0 z-[60] bg-primary-bg flex flex-col"
-          >
-            <div className="flex items-center justify-between p-6 border-b border-border">
-              <span className="text-xl font-display font-semibold uppercase">IkarisShoes™</span>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 -mr-2">
-                <X className="w-6 h-6" strokeWidth={1.5} />
-              </button>
+      {shouldRenderMenu && (
+        <div
+          ref={mobileMenuRef}
+          className="fixed inset-0 z-[60] bg-primary-bg flex flex-col"
+        >
+          <div className="flex items-center justify-between p-6 border-b border-border">
+            <span className="text-xl font-display font-semibold uppercase">IkarisShoes™</span>
+            <button onClick={closeMobileMenu} className="p-2 -mr-2">
+              <X className="w-6 h-6" strokeWidth={1.5} />
+            </button>
+          </div>
+          <nav className="flex flex-col p-6 gap-6 text-lg font-display">
+            <Link to="/shop" onClick={closeMobileMenu}>Explore Collection</Link>
+            <Link to="/stories" onClick={closeMobileMenu}>Our Story</Link>
+            <Link to="/craftsmanship" onClick={closeMobileMenu}>Craftsmanship</Link>
+            <Link to="/account" onClick={closeMobileMenu}>Account</Link>
+          </nav>
+          <div className="mt-auto p-6 bg-secondary-bg">
+            <p className="text-sm text-text-secondary uppercase tracking-wider mb-4">Client Services</p>
+            <div className="space-y-3 text-sm">
+              <p>Complimentary Shipping</p>
+              <p>Contact the Atelier</p>
             </div>
-            <nav className="flex flex-col p-6 gap-6 text-lg font-display">
-              <Link to="/shop" onClick={() => setIsMobileMenuOpen(false)}>Explore Collection</Link>
-              <Link to="/stories" onClick={() => setIsMobileMenuOpen(false)}>Our Story</Link>
-              <Link to="#" onClick={() => setIsMobileMenuOpen(false)}>Craftsmanship</Link>
-              <Link to="/account" onClick={() => setIsMobileMenuOpen(false)}>Account</Link>
-            </nav>
-            <div className="mt-auto p-6 bg-secondary-bg">
-              <p className="text-sm text-text-secondary uppercase tracking-wider mb-4">Client Services</p>
-              <div className="space-y-3 text-sm">
-                <p>Complimentary Shipping</p>
-                <p>Contact the Atelier</p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </>
   );
 }

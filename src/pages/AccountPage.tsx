@@ -1,6 +1,7 @@
-import { motion, AnimatePresence } from 'framer-motion';
 import { Settings, Package, MapPin, CreditCard, LogOut, ChevronRight, Star } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 const mockOrders = [
   {
@@ -25,6 +26,16 @@ const mockOrders = [
 
 export default function AccountPage() {
   const [activeTab, setActiveTab] = useState('orders');
+  const mainRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    if (activeTab) {
+      gsap.fromTo('.tab-content', 
+        { opacity: 0, x: 20 },
+        { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }
+      );
+    }
+  }, { dependencies: [activeTab], scope: mainRef });
 
   const tabs = [
     { id: 'orders', label: 'Order History', icon: Package },
@@ -78,94 +89,80 @@ export default function AccountPage() {
           </aside>
 
           {/* Content Area */}
-          <main className="flex-grow">
-            <AnimatePresence mode="wait">
-              {activeTab === 'orders' && (
-                <motion.div
-                  key="orders"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="space-y-8"
-                >
-                  <div className="space-y-6">
-                    {mockOrders.map((order) => (
-                      <div key={order.id} className="bg-secondary-bg/30 border border-border p-8 group hover:border-accent transition-colors duration-500">
-                        <div className="flex flex-col md:flex-row justify-between gap-6 mb-8">
-                          <div className="space-y-1">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Order Reference</p>
-                            <h3 className="text-lg font-display font-medium">{order.id}</h3>
-                          </div>
-                          <div className="space-y-1 md:text-right">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Date</p>
-                            <p className="text-sm font-medium">{order.date}</p>
-                          </div>
-                          <div className="space-y-1 md:text-right">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Total</p>
-                            <p className="text-sm font-mono">${order.total.toFixed(2)}</p>
-                          </div>
-                          <div className="space-y-1 md:text-right">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Status</p>
-                            <p className="text-[9px] font-bold uppercase tracking-widest px-3 py-1 bg-white border border-border inline-block">
-                              {order.status}
-                            </p>
-                          </div>
+          <main className="flex-grow" ref={mainRef}>
+            {activeTab === 'orders' && (
+              <div className="tab-content space-y-8">
+                <div className="space-y-6">
+                  {mockOrders.map((order) => (
+                    <div key={order.id} className="bg-secondary-bg/30 border border-border p-8 group hover:border-accent transition-colors duration-500">
+                      <div className="flex flex-col md:flex-row justify-between gap-6 mb-8">
+                        <div className="space-y-1">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Order Reference</p>
+                          <h3 className="text-lg font-display font-medium">{order.id}</h3>
                         </div>
+                        <div className="space-y-1 md:text-right">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Date</p>
+                          <p className="text-sm font-medium">{order.date}</p>
+                        </div>
+                        <div className="space-y-1 md:text-right">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Total</p>
+                          <p className="text-sm font-mono">${order.total.toFixed(2)}</p>
+                        </div>
+                        <div className="space-y-1 md:text-right">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Status</p>
+                          <p className="text-[9px] font-bold uppercase tracking-widest px-3 py-1 bg-white border border-border inline-block">
+                            {order.status}
+                          </p>
+                        </div>
+                      </div>
 
-                        <div className="flex flex-wrap gap-6 pt-8 border-t border-border/50">
-                          {order.items.map((item, i) => (
-                            <div key={i} className="flex gap-4 items-center">
-                              <div className="w-16 h-20 bg-secondary-bg overflow-hidden border border-border">
-                                <img src={item.image} alt={item.name} className="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700" />
-                              </div>
-                              <div>
-                                <p className="text-sm font-semibold">{item.name}</p>
-                                <p className="text-[10px] text-text-secondary uppercase tracking-widest">Quantity: {item.quantity}</p>
-                              </div>
+                      <div className="flex flex-wrap gap-6 pt-8 border-t border-border/50">
+                        {order.items.map((item, i) => (
+                          <div key={i} className="flex gap-4 items-center">
+                            <div className="w-16 h-20 bg-secondary-bg overflow-hidden border border-border">
+                              <img src={item.image} alt={item.name} className="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700" />
                             </div>
-                          ))}
-                          <button className="ml-auto self-center flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.2em] group-hover:text-accent transition-colors">
-                            View Details <ChevronRight className="w-3 h-3" />
-                          </button>
-                        </div>
+                            <div>
+                              <p className="text-sm font-semibold">{item.name}</p>
+                              <p className="text-[10px] text-text-secondary uppercase tracking-widest">Quantity: {item.quantity}</p>
+                            </div>
+                          </div>
+                        ))}
+                        <button className="ml-auto self-center flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.2em] group-hover:text-accent transition-colors">
+                          View Details <ChevronRight className="w-3 h-3" />
+                        </button>
                       </div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-              {activeTab === 'details' && (
-                <motion.div
-                  key="details"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="max-w-xl"
-                >
-                  <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">First Name</label>
-                        <input type="text" defaultValue="Luca" className="w-full bg-secondary-bg border-none px-6 py-4 text-sm font-medium focus:ring-1 focus:ring-accent outline-none" />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Last Name</label>
-                        <input type="text" defaultValue="Moretti" className="w-full bg-secondary-bg border-none px-6 py-4 text-sm font-medium focus:ring-1 focus:ring-accent outline-none" />
-                      </div>
+            {activeTab === 'details' && (
+              <div className="tab-content max-w-xl">
+                <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">First Name</label>
+                      <input type="text" defaultValue="Luca" className="w-full bg-secondary-bg border-none px-6 py-4 text-sm font-medium focus:ring-1 focus:ring-accent outline-none" />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Email Address</label>
-                      <input type="email" defaultValue="luca.moretti@classic.it" className="w-full bg-secondary-bg border-none px-6 py-4 text-sm font-medium focus:ring-1 focus:ring-accent outline-none" />
+                      <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Last Name</label>
+                      <input type="text" defaultValue="Moretti" className="w-full bg-secondary-bg border-none px-6 py-4 text-sm font-medium focus:ring-1 focus:ring-accent outline-none" />
                     </div>
-                    <div className="pt-4">
-                      <button className="bg-text-primary text-white px-10 py-5 text-[10px] font-bold uppercase tracking-widest hover:bg-accent transition-colors">
-                        Save Changes
-                      </button>
-                    </div>
-                  </form>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Email Address</label>
+                    <input type="email" defaultValue="luca.moretti@classic.it" className="w-full bg-secondary-bg border-none px-6 py-4 text-sm font-medium focus:ring-1 focus:ring-accent outline-none" />
+                  </div>
+                  <div className="pt-4">
+                    <button className="bg-text-primary text-white px-10 py-5 text-[10px] font-bold uppercase tracking-widest hover:bg-accent transition-colors">
+                      Save Changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
           </main>
         </div>
       </div>

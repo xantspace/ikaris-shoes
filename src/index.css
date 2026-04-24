@@ -26,10 +26,9 @@
     @apply font-display font-medium tracking-tight;
   }
 
-  /* Smooth scroll */
-  html {
-    scroll-behavior: smooth;
-  }
+  /* Smooth scroll is intentionally disabled globally to prevent
+     page navigation from animating scroll position. Use GSAP or
+     CSS scroll-behavior on specific containers if needed. */
 }
 
 @layer components {

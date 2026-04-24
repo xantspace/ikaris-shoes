@@ -1,4 +1,4 @@
-﻿import { ArrowRight, Instagram } from 'lucide-react';
+import { ArrowRight, Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -18,7 +18,7 @@ export default function Footer() {
             <h3 className="text-xs uppercase tracking-widest text-text-secondary mb-6 font-semibold">The House</h3>
             <ul className="space-y-4 text-sm font-medium">
               <li><Link to="/stories" className="hover:text-accent transition-colors">Our Story</Link></li>
-              <li><Link to="/stories" className="hover:text-accent transition-colors">Craftsmanship</Link></li>
+              <li><Link to="/craftsmanship" className="hover:text-accent transition-colors">Craftsmanship</Link></li>
               <li><a href="#" className="hover:text-accent transition-colors">Atelier Menu</a></li>
               <li><a href="#" className="hover:text-accent transition-colors">Sustainability</a></li>
             </ul>

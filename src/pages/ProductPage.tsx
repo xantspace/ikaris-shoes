@@ -2,10 +2,14 @@ import { useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { mockProducts } from '../data/mockData';
 import { ChevronRight, Heart, Share2, Info, ChevronDown } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import ShoeViewer from '../components/ShoeViewer';
 import SEO from '../components/SEO';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -13,6 +17,14 @@ export default function ProductPage() {
   const product = mockProducts.find(p => p.id === id) || mockProducts[0]; 
   const containerRef = useRef<HTMLDivElement>(null);
   
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  const [selectedSize, setSelectedSize] = useState<number | null>(null);
+  const [is3DView, setIs3DView] = useState(true);
+  const [activeImage, setActiveImage] = useState(product.images.main);
+  const [openAccordions, setOpenAccordions] = useState<string[]>(['description']);
+  const [showSizeError, setShowSizeError] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   const productSchema = {
     "@context": "https://schema.org/",
     "@type": "Product",
@@ -39,20 +51,43 @@ export default function ProductPage() {
     }
   };
 
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState<number | null>(null);
-  const [is3DView, setIs3DView] = useState(true);
-  const [activeImage, setActiveImage] = useState(product.images.main);
-  const [openAccordions, setOpenAccordions] = useState<string[]>(['description']);
-  const [showSizeError, setShowSizeError] = useState(false);
+  useGSAP(() => {
+    // Page Entrance
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 1 } });
+    
+    tl.from('.product-breadcrumb', { y: 20, opacity: 0 })
+      .from('.product-gallery', { x: -30, opacity: 0 }, "-=0.7")
+      .from('.product-info', { x: 30, opacity: 0 }, "-=0.7");
 
-  // Scroll tracking for 3D rotation
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
+    // Scroll Progress for 3D Viewer
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+      onUpdate: (self) => {
+        setScrollProgress(self.progress);
+      }
+    });
 
-  const rotation = useTransform(scrollYProgress, [0, 1], [0, 1]);
+    // Magnetic Buttons
+    const magneticButtons = gsap.utils.toArray<HTMLElement>('.btn-magnetic');
+    magneticButtons.forEach((btn) => {
+      const onMouseMove = (e: MouseEvent) => {
+        const { clientX, clientY } = e;
+        const { left, top, width, height } = btn.getBoundingClientRect();
+        const x = clientX - (left + width / 2);
+        const y = clientY - (top + height / 2);
+        gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.4, ease: "power2.out" });
+      };
+      const onMouseLeave = () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.3)" });
+      };
+      btn.addEventListener('mousemove', onMouseMove);
+      btn.addEventListener('mouseleave', onMouseLeave);
+    });
+
+  }, { scope: containerRef });
 
   const toggleAccordion = (id: string) => {
     setOpenAccordions(prev => 
@@ -83,7 +118,7 @@ export default function ProductPage() {
         ogImage={product.images.main}
         schema={productSchema}
       />
-      <div className="mb-8 hidden md:flex items-center gap-2 text-xs text-text-secondary uppercase tracking-widest font-mono">
+      <div className="product-breadcrumb mb-8 hidden md:flex items-center gap-2 text-xs text-text-secondary uppercase tracking-widest font-mono">
         <Link to="/" className="hover:text-text-primary transition-colors">Home</Link> 
         <ChevronRight className="w-3 h-3" />
         <Link to="/shop" className="hover:text-text-primary transition-colors">Shop</Link>
@@ -93,37 +128,23 @@ export default function ProductPage() {
 
       <div className="flex flex-col lg:flex-row gap-12 xl:gap-20">
         {/* Image / 3D Gallery */}
-        <div className="w-full lg:w-[60%] flex flex-col md:flex-row-reverse gap-4">
+        <div className="product-gallery w-full lg:w-[60%] flex flex-col md:flex-row-reverse gap-4">
           {/* Main View */}
           <div className="w-full bg-secondary-bg aspect-[4/5] md:aspect-auto md:h-[800px] relative overflow-hidden">
-            <AnimatePresence mode="wait">
-              {is3DView ? (
-                <motion.div 
-                  key="3d"
-                  className="w-full h-full"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <ShoeViewer color={selectedColor.hex} scrollProgress={rotation} />
-                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-text-primary/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] uppercase tracking-tighter text-text-primary pointer-events-none">
-                    Scroll to Rotate & Explore
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.img 
-                  key={activeImage}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  src={activeImage} 
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              )}
-            </AnimatePresence>
+            {is3DView ? (
+              <div className="w-full h-full opacity-100 transition-opacity duration-500">
+                <ShoeViewer color={selectedColor.hex} scrollProgress={scrollProgress} />
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-text-primary/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] uppercase tracking-tighter text-text-primary pointer-events-none">
+                  Scroll to Rotate & Explore
+                </div>
+              </div>
+            ) : (
+              <img 
+                src={activeImage} 
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
+            )}
           </div>
           
           {/* Thumbnails */}
@@ -155,7 +176,7 @@ export default function ProductPage() {
         </div>
 
         {/* Product Info container */}
-        <div className="w-full lg:w-[40%]">
+        <div className="product-info w-full lg:w-[40%]">
           <div className="sticky top-28">
             <p className="text-xs uppercase tracking-widest text-text-secondary font-mono mb-2">{product.brand}</p>
             <h1 className="text-3xl md:text-4xl font-display font-medium mb-1">{product.name}</h1>
@@ -227,7 +248,7 @@ export default function ProductPage() {
             <div className="flex gap-4 mb-10">
               <button 
                 onClick={handleAddToCart}
-                className="btn-primary flex-1 h-14"
+                className="btn-primary flex-1 h-14 btn-magnetic"
               >
                 Add to Cart - ${product.price}
               </button>
@@ -249,24 +270,17 @@ export default function ProductPage() {
                     className="w-full py-5 flex justify-between items-center text-left font-medium hover:text-accent transition-colors"
                   >
                     {section.title}
-                    <motion.div animate={{ rotate: openAccordions.includes(section.id) ? 180 : 0 }}>
+                    <div className={`transition-transform duration-300 ${openAccordions.includes(section.id) ? 'rotate-180' : ''}`}>
                       <ChevronDown className="w-5 h-5" strokeWidth={1.5} />
-                    </motion.div>
+                    </div>
                   </button>
-                  <AnimatePresence>
-                    {openAccordions.includes(section.id) && (
-                      <motion.div 
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="pb-5 text-text-secondary text-sm leading-relaxed">
-                          {section.content}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  <div 
+                    className={`overflow-hidden transition-all duration-300 ${openAccordions.includes(section.id) ? 'max-h-96 opacity-100 mb-5' : 'max-h-0 opacity-0'}`}
+                  >
+                    <div className="text-text-secondary text-sm leading-relaxed">
+                      {section.content}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

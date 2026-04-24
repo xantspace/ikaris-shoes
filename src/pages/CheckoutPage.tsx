@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { 
   ChevronLeft, 
   CreditCard, 
@@ -20,6 +21,16 @@ export default function CheckoutPage() {
   const { items, cartTotal, clearCart } = useCart();
   const [step, setStep] = useState<CheckoutStep>('information');
   const [isProcessing, setIsProcessing] = useState(false);
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (step) {
+      gsap.fromTo('.checkout-step', 
+        { opacity: 0, x: -20 },
+        { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }
+      );
+    }
+  }, { dependencies: [step], scope: mainRef });
 
   // Redirect if cart is empty and not on confirmation step
   if (items.length === 0 && step !== 'confirmation') {
@@ -70,15 +81,9 @@ export default function CheckoutPage() {
               <span className={step === 'payment' ? 'text-text-primary' : 'text-text-secondary'}>Payment</span>
             </nav>
 
-            <AnimatePresence mode="wait">
+            <div ref={mainRef}>
               {step === 'information' && (
-                <motion.div
-                  key="info"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  className="space-y-10"
-                >
+                <div className="checkout-step space-y-10">
                   <header>
                     <h1 className="text-3xl font-display font-medium tracking-tight mb-2 uppercase">Private Information</h1>
                     <p className="text-sm text-text-secondary">Please provide your contact details for artisan validation.</p>
@@ -118,17 +123,11 @@ export default function CheckoutPage() {
                   >
                     Continue to Shipping <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
-                </motion.div>
+                </div>
               )}
 
               {step === 'shipping' && (
-                <motion.div
-                  key="shipping"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  className="space-y-10"
-                >
+                <div className="checkout-step space-y-10">
                   <header className="flex items-center gap-4">
                     <button onClick={handlePrev} className="p-2 -ml-2 hover:bg-secondary-bg rounded-full transition-colors">
                       <ChevronLeft className="w-5 h-5" />
@@ -179,17 +178,11 @@ export default function CheckoutPage() {
                   >
                     Continue to Payment <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
-                </motion.div>
+                </div>
               )}
 
               {step === 'payment' && (
-                <motion.div
-                  key="payment"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  className="space-y-10"
-                >
+                <div className="checkout-step space-y-10">
                   <header className="flex items-center gap-4">
                     <button onClick={handlePrev} className="p-2 -ml-2 hover:bg-secondary-bg rounded-full transition-colors">
                       <ChevronLeft className="w-5 h-5" />
@@ -241,11 +234,7 @@ export default function CheckoutPage() {
                       </span>
                       {isProcessing && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <motion.div 
-                            animate={{ rotate: 360 }}
-                            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                            className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                          />
+                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         </div>
                       )}
                     </button>
@@ -254,16 +243,11 @@ export default function CheckoutPage() {
                       <span>End-to-End Encryption Enabled</span>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {step === 'confirmation' && (
-                <motion.div
-                  key="confirmation"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="space-y-12 text-center py-12"
-                >
+                <div className="checkout-step space-y-12 text-center py-12">
                   <div className="space-y-6">
                     <div className="w-20 h-20 bg-accent/10 rounded-full flex items-center justify-center mx-auto">
                       <CheckCircle2 className="w-10 h-10 text-accent" />
@@ -290,9 +274,9 @@ export default function CheckoutPage() {
                       Return Home <ArrowRight className="w-4 h-4" />
                     </Link>
                   </div>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
+            </div>
           </div>
         </div>
 

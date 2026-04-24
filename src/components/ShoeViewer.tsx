@@ -2,11 +2,10 @@ import { Suspense, useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Stage, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
-import { MotionValue } from 'framer-motion';
 
 interface ShoeProps {
   color: string;
-  scrollProgress: MotionValue<number>;
+  scrollProgress: number;
 }
 
 function Shoe({ color, scrollProgress }: ShoeProps) {
@@ -30,7 +29,7 @@ function Shoe({ color, scrollProgress }: ShoeProps) {
   const baseColor = useMemo(() => new THREE.Color(color), [color]);
 
   useFrame(() => {
-    const p = scrollProgress.get();
+    const p = scrollProgress;
     
     // Color reactivity
     shoeMeshes.forEach((mesh) => {
