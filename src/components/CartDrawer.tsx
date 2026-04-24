@@ -2,15 +2,16 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Minus, Plus, ShoppingBag, Check, Package, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function CartDrawer() {
   const { isCartOpen, setIsCartOpen, items, removeFromCart, updateQuantity, cartTotal, clearCart } = useCart();
   const [hasPlacedOrder, setHasPlacedOrder] = useState(false);
+  const navigate = useNavigate();
 
   const handleCheckout = () => {
-    setHasPlacedOrder(true);
-    // In a real app, we would process the order here
+    setIsCartOpen(false);
+    navigate('/checkout');
   };
 
   const handleClose = () => {

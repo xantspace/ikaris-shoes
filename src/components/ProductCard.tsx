@@ -6,13 +6,13 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="group flex flex-col relative w-full h-full">
       <Link to={`/product/${product.id}`} className="relative aspect-[4/5] bg-secondary-bg overflow-hidden mb-4 block">
-        {/* Main image (visible by default, hidden on hover) */}
+        {/* Main image — always visible */}
         <img 
           src={product.images.main} 
           alt={product.name} 
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out opacity-100 group-hover:opacity-0"
+          className="absolute inset-0 w-full h-full object-cover"
         />
-        {/* Hover image (hidden by default, visible on hover) */}
+        {/* Hover image — layered on top, fades in on hover */}
         <img 
           src={product.images.hover} 
           alt={`${product.name} lifestyle`} 

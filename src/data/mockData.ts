@@ -43,19 +43,19 @@ export const mockCollections: Collection[] = [
   {
     id: "derby-oxfords",
     name: "Derby & Oxfords",
-    image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
     productCount: 12
   },
   {
     id: "loafers",
     name: "Loafers",
-    image: "https://images.unsplash.com/photo-1621315213173-1d2a13bc8160?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&auto=format&fit=crop&q=80",
     productCount: 8
   },
   {
     id: "boots",
     name: "Boots",
-    image: "https://images.unsplash.com/photo-1620612284347-190b39678393?auto=format&fit=crop&q=80",
+    image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=800&auto=format&fit=crop&q=80",
     productCount: 15
   }
 ];
@@ -73,8 +73,8 @@ export const mockProducts: Product[] = [
         name: "Black", 
         hex: "#111111", 
         images: {
-          main: "https://images.unsplash.com/photo-1614252209825-9fa501cb6c04?auto=format&fit=crop&q=80",
-          hover: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&q=80",
+          main: "/shoe1.jpg",
+          hover: "/shoe2.jpg",
           gallery: []
         }
       },
@@ -82,8 +82,8 @@ export const mockProducts: Product[] = [
         name: "Cognac", 
         hex: "#8B4513", 
         images: {
-          main: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80",
-          hover: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&q=80",
+          main: "/shoe2.jpg",
+          hover: "/shoe3.jpg",
           gallery: []
         } 
       }
@@ -93,12 +93,12 @@ export const mockProducts: Product[] = [
     materials: "Italian calfskin leather, Goodyear welted construction",
     description: "A timeless silhouette refined through generations. Hand-cut from a single piece of premium calfskin, offering unparalleled elegance and durability.",
     images: {
-      main: "https://images.unsplash.com/photo-1614252209825-9fa501cb6c04?auto=format&fit=crop&q=80",
-      hover: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&q=80",
+      main: "/shoe1.jpg",
+      hover: "/shoe2.jpg",
       gallery: [
-        "https://images.unsplash.com/photo-1614252209825-9fa501cb6c04?auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80"
+        "/shoe1.jpg",
+        "/shoe2.jpg",
+        "/shoe3.jpg"
       ]
     },
     featured: true,
@@ -118,8 +118,8 @@ export const mockProducts: Product[] = [
         name: "Suede Tan", 
         hex: "#C19A6B", 
         images: {
-          main: "https://images.unsplash.com/photo-1621315213173-1d2a13bc8160?auto=format&fit=crop&q=80",
-          hover: "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&q=80",
+          main: "/shoe2.jpg",
+          hover: "/shoe3.jpg",
           gallery: []
         } 
       }
@@ -129,8 +129,8 @@ export const mockProducts: Product[] = [
     materials: "Repello suede, unlined interior, leather sole",
     description: "The quintessential warm-weather shoe. Unlined for immediate comfort without the break-in period.",
     images: {
-      main: "https://images.unsplash.com/photo-1621315213173-1d2a13bc8160?auto=format&fit=crop&q=80",
-      hover: "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&q=80",
+      main: "/shoe2.jpg",
+      hover: "/shoe3.jpg",
       gallery: []
     },
     featured: true,
@@ -150,8 +150,8 @@ export const mockProducts: Product[] = [
         name: "Black Suede", 
         hex: "#222222", 
         images: {
-          main: "https://images.unsplash.com/photo-1620612284347-190b39678393?auto=format&fit=crop&q=80",
-          hover: "https://images.unsplash.com/photo-1620152865506-699ee9b9da48?auto=format&fit=crop&q=80",
+          main: "/shoe3.jpg",
+          hover: "/shoe1.jpg",
           gallery: []
         } 
       }
@@ -161,8 +161,8 @@ export const mockProducts: Product[] = [
     materials: "Water-resistant suede, Dainite rubber sole",
     description: "Built for versatility. The Alps boot seamlessly transitions from city streets to countryside escapes.",
     images: {
-      main: "https://images.unsplash.com/photo-1620612284347-190b39678393?auto=format&fit=crop&q=80",
-      hover: "https://images.unsplash.com/photo-1620152865506-699ee9b9da48?auto=format&fit=crop&q=80",
+      main: "/shoe3.jpg",
+      hover: "/shoe1.jpg",
       gallery: []
     },
     featured: true,
@@ -181,8 +181,8 @@ export const mockProducts: Product[] = [
         name: "Burgundy", 
         hex: "#4A0404", 
         images: {
-          main: "https://images.unsplash.com/photo-1638908724353-832ae9902868?auto=format&fit=crop&q=80",
-          hover: "https://images.unsplash.com/photo-1614252339475-533eba8cb34e?auto=format&fit=crop&q=80",
+          main: "/shoe1.jpg",
+          hover: "/shoe3.jpg",
           gallery: []
         } 
       }
@@ -192,8 +192,8 @@ export const mockProducts: Product[] = [
     materials: "Museum calf leather, Oak bark tanned sole",
     description: "Our most formal offering. Hand-patinated leather gives each pair a completely unique finish.",
     images: {
-      main: "https://images.unsplash.com/photo-1638908724353-832ae9902868?auto=format&fit=crop&q=80",
-      hover: "https://images.unsplash.com/photo-1614252339475-533eba8cb34e?auto=format&fit=crop&q=80",
+      main: "/shoe1.jpg",
+      hover: "/shoe3.jpg",
       gallery: []
     },
     featured: true,

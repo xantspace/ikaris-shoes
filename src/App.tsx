@@ -9,6 +9,7 @@ import ProductPage from './pages/ProductPage';
 import StoriesPage from './pages/StoriesPage';
 import AccountPage from './pages/AccountPage';
 import CraftsmanshipPage from './pages/CraftsmanshipPage';
+import CheckoutPage from './pages/CheckoutPage';
 import PromoGiftbox from './components/PromoGiftbox';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
               <Route path="/craftsmanship" element={<CraftsmanshipPage />} />
               <Route path="/account" element={<AccountPage />} />
               <Route path="/product/:id" element={<ProductPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
             </Routes>
           </main>
           <Footer />
