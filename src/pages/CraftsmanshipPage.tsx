@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Hammer, Waves, Sun, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const processes = [
   {
@@ -26,6 +27,11 @@ const processes = [
 export default function CraftsmanshipPage() {
   return (
     <div className="pt-20 bg-primary-bg overflow-hidden">
+      <SEO 
+        title="The Artisan Process: Handcrafting Luxury in Florence"
+        description="Discover the 180-step process behind every pair of IkarisShoes™. From Tuscan calfskin selection to hand-burnishing by master artisans in our Florence atelier."
+        canonical="https://ikaris-shoes.vercel.app/craftsmanship"
+      />
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden bg-[#121212] text-white">
         <div className="absolute inset-0 opacity-40">

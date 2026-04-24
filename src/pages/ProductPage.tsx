@@ -5,6 +5,7 @@ import { ChevronRight, Heart, Share2, Info, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import ShoeViewer from '../components/ShoeViewer';
+import SEO from '../components/SEO';
 
 export default function ProductPage() {
   const { id } = useParams();
@@ -12,6 +13,32 @@ export default function ProductPage() {
   const product = mockProducts.find(p => p.id === id) || mockProducts[0]; 
   const containerRef = useRef<HTMLDivElement>(null);
   
+  const productSchema = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": product.name,
+    "image": [product.images.main, product.images.hover, ...product.images.gallery],
+    "description": product.description,
+    "sku": product.id,
+    "brand": {
+      "@type": "Brand",
+      "name": "IkarisShoes™"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": `https://ikaris-shoes.vercel.app/product/${product.id}`,
+      "priceCurrency": "USD",
+      "price": product.price,
+      "availability": "https://schema.org/InStock",
+      "itemCondition": "https://schema.org/NewCondition"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": product.rating,
+      "reviewCount": product.reviewCount
+    }
+  };
+
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [is3DView, setIs3DView] = useState(true);
@@ -48,6 +75,14 @@ export default function ProductPage() {
 
   return (
     <div ref={containerRef} className="pt-24 pb-20 container-custom">
+      <SEO 
+        title={`${product.name} | Handcrafted Footwear`}
+        description={product.description}
+        canonical={`https://ikaris-shoes.vercel.app/product/${product.id}`}
+        ogType="product"
+        ogImage={product.images.main}
+        schema={productSchema}
+      />
       <div className="mb-8 hidden md:flex items-center gap-2 text-xs text-text-secondary uppercase tracking-widest font-mono">
         <Link to="/" className="hover:text-text-primary transition-colors">Home</Link> 
         <ChevronRight className="w-3 h-3" />

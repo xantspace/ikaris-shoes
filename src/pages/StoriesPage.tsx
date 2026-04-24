@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { mockStories } from '../data/mockData';
+import SEO from '../components/SEO';
 
 const categories = ['All Stories', 'Craftsmanship', 'Lifestyle', 'Materials', 'Inspiration'];
 
@@ -14,6 +15,11 @@ export default function StoriesPage() {
 
   return (
     <div className="pt-24 min-h-screen bg-primary-bg font-sans">
+      <SEO 
+        title="Journal: Italian Luxury & Footwear Heritage"
+        description="A visual journey through the streets of Florence and the halls of our atelier. Explore stories of craftsmanship, lifestyle, and the modern nomad."
+        canonical="https://ikaris-shoes.vercel.app/stories"
+      />
       {/* Hero Section */}
       <section className="relative h-[60vh] overflow-hidden flex items-center justify-center">
         <motion.div 

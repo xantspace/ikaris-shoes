@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Exclude private pages
+Disallow: /account
+Disallow: /cart
+Disallow: /checkout
+
+Sitemap: https://ikarisshoes.com/sitemap.xml

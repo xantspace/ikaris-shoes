@@ -13,11 +13,50 @@ const shoeGallery = [
   { src: '/shoe3.jpg' }
 ];
 
+import SEO from '../components/SEO';
+
 export default function HomePage() {
   const covetedProducts = mockProducts.filter(p => p.featured);
 
+  const homeSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "IkarisShoes™",
+    "url": "https://ikaris-shoes.vercel.app/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://ikaris-shoes.vercel.app/shop?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "IkarisShoes™",
+    "url": "https://ikaris-shoes.vercel.app/",
+    "logo": "https://ikaris-shoes.vercel.app/logo.png",
+    "sameAs": [
+      "https://instagram.com/ikarisshoes",
+      "https://twitter.com/ikarisshoes"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Via dei Fossi",
+      "addressLocality": "Florence",
+      "addressRegion": "FI",
+      "postalCode": "50123",
+      "addressCountry": "IT"
+    }
+  };
+
   return (
     <div className="w-full overflow-hidden">
+      <SEO 
+        title="IkarisShoes™ | The Art of Motion - Handcrafted Luxury Footwear" 
+        description="Experience the Art of Motion with IkarisShoes™. Refined silhouettes handcrafted in Florence from premium Tuscan leathers. Sustainable, artisan-made luxury footwear for the modern nomad."
+        schema={{ "@graph": [homeSchema, orgSchema] }}
+      />
       {/* Hero Section */}
       <section className="relative min-h-screen w-full flex items-center bg-primary-bg pt-20">
         <div className="container-custom grid grid-cols-1 lg:grid-cols-2 gap-24 lg:gap-16 items-center">

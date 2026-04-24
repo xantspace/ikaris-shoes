@@ -3,6 +3,7 @@ import { mockProducts } from '../data/mockData';
 import ProductCard from '../components/ProductCard';
 import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SEO from '../components/SEO';
 
 export default function ShopPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -14,6 +15,11 @@ export default function ShopPage() {
 
   return (
     <div className="pt-24 pb-20 container-custom">
+      <SEO 
+        title="Shop Luxury Italian Shoes & Handcrafted Leather Boots" 
+        description="Explore our curated collection of handcrafted Oxfords, Loafers, and Chelsea Boots. Made in Italy with sustainable Tuscan leather. Worldwide shipping available."
+        canonical="https://ikaris-shoes.vercel.app/shop"
+      />
       {/* Breadcrumb & Header */}
       <div className="mb-8 hidden md:block">
         <p className="text-xs text-text-secondary uppercase tracking-widest font-mono">
